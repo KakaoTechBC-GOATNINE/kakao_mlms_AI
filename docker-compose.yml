@@ -4,12 +4,8 @@ services:
       context: ./ai
       dockerfile: Dockerfile
     container_name: fastapi_container
-    environment:
-      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@postgresql:5432/${POSTGRES_DB}
     ports:
       - "8000:8000"
-    depends_on:
-      - postgresql
     networks:
       - app-network
 
