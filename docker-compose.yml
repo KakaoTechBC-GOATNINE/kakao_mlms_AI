@@ -1,0 +1,69 @@
+services:
+  postgresql:
+    image: postgres:13
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  springboot:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: springboot_container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    networks:
+      - app-network
+    volumes:
+      - images_data:/home/ubuntu/kakao_machine-learning-model-serving/images/
+
+  fastapi:
+    build:
+      context: ./ai
+      dockerfile: Dockerfile
+    container_name: fastapi_container
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@postgresql:5432/${POSTGRES_DB}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresql
+    networks:
+      - app-network
+
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react_container
+    ports:
+      - "3000:80"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - springboot
+      - fastapi
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  images_data:
+
+networks:
+  app-network:
+    driver: bridge

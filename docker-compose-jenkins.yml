@@ -1,0 +1,14 @@
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    container_name: jenkins_cicd
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /jenkins:/var/jenkins_home
+      - /home/ubuntu/kakao_machine-learning-model-serving:/home/ubuntu/kakao_machine-learning-model-serving # 호스트 경로를 컨테이너 내부로 마운트
+    ports:
+      - "8088:8080"
+    privileged: true
+    user: root
