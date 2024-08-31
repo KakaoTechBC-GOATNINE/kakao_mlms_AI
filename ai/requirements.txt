@@ -1,0 +1,42 @@
+# FastAPI and its dependencies
+fastapi
+uvicorn
+requests
+
+# Selenium and WebDriver Manager for browser automation
+selenium
+webdriver-manager
+
+# BeautifulSoup for HTML parsing
+beautifulsoup4
+
+# Numerical computations and array operations
+numpy
+
+# Data manipulation and visualization
+pandas
+matplotlib
+seaborn
+
+# Machine learning utilities
+scikit-learn
+
+# Korean language processing
+konlpy
+mecab-python3
+
+# PyTorch for deep learning
+torch
+
+# Tensorflow for LSTM model creat
+Tensorflow
+Keras
+
+# Hugging Face Transformers for NLP models
+transformers
+
+# clustering
+sentence-transformers
+umap-learn
+hdbscan
+tf-keras
