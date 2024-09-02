@@ -1,0 +1,53 @@
+services:
+  elasticsearch:
+    container_name: elasticsearch_container
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"  # 메모리 설정을 512MB로 증가시킴
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}  # 비밀번호는 .env 파일에서 가져옵니다.
+      discovery.type: single-node
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  kibana:
+    container_name: kibana_container
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    networks:
+      - app-network
+    depends_on:
+      - elasticsearch
+
+volumes:
+  elasticsearch:
+
+networks:
+  app-network:
+    driver: bridge
