@@ -9,6 +9,50 @@ services:
     networks:
       - app-network
 
+  elasticsearch:
+    container_name: elasticsearch_container
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: mlms123
+      discovery.type: single-node
+    networks:
+      - app-network
+  
+  kibana:
+    container_name: kibana_container
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    networks:
+      - app-network
+    depends_on:
+      - elasticsearch
+
+volumes:
+  elasticsearch:
+
 networks:
   app-network:
     driver: bridge

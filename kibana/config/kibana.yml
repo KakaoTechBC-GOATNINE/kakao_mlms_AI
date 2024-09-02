@@ -1,0 +1,18 @@
+---
+## Default Kibana configuration from Kibana base image.
+## https://github.com/elastic/kibana/blob/master/src/dev/build/tasks/os_packages/docker_generator/templates/kibana_yml.template.ts
+#
+server.name: kibana
+server.host: 0.0.0.0
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+monitoring.ui.container.elasticsearch.enabled: true
+
+## X-Pack security credentials
+#
+# elasticsearch.username: elastic
+# elasticsearch.password: mlms123
+
+elasticsearch.serviceAccountToken: AAEAAWVsYXN0aWMva2liYW5hL2RlZmF1bHQ6clpwWE5nMGZUclM2WkxMUlBTV0VjZw
+
+# 암호화 키를 설정
+xpack.encryptedSavedObjects.encryptionKey: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
