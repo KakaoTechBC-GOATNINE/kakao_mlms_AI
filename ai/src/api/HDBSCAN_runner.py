@@ -8,12 +8,12 @@ from typing import List, Dict
 매개변수:
 - ranked_recommendations (List[Dict]): 랭킹된 가게 추천 리스트.
 - reviews (List[tuple]): 가게 이름, 평점, 주소, 리뷰 리스트가 포함된 튜플 리스트.
-- top_n (int): 클러스터링된 리뷰에서 추출할 상위 키워드 개수 (기본값 5).
+- top_n (int): 클러스터링된 리뷰에서 추출할 상위 키워드 개수 (기본값 10).
 
 반환값:
 - List[Dict]: 각 가게 추천에 클러스터링된 키워드가 추가된 업데이트된 리스트.
 """
-def cluster_reviews_runner(ranked_recommendations: List[Dict], reviews: List[tuple], top_n: int = 5) -> List[Dict]:
+def cluster_reviews_runner(ranked_recommendations: List[Dict], reviews: List[tuple], top_n: int = 10) -> List[Dict]:
     for rec in ranked_recommendations[:5] + ranked_recommendations[-5:]:
         store_name = rec["store_name"]
         
