@@ -10,12 +10,20 @@ from src.api.HDBSCAN_runner import cluster_reviews_runner
 from src.api.keyword_checking_ES import check_and_get_document
 import os
 import time
+from dotenv import load_dotenv
+
+# 환경 변수 로드
+load_dotenv()
+
 
 # FastAPI 애플리케이션 생성
 app = FastAPI()
 
 # Elasticsearch 클라이언트 생성
-es = Elasticsearch(["http://localhost:9200"])
+es = Elasticsearch(
+    [os.getenv("ELASTICSEARCH_URL")],
+    http_auth=(os.getenv("ELASTICSEARCH_USER"), os.getenv("ELASTICSEARCH_PASSWORD"))
+)
 
 # huggingface/tokenizers 병렬 warning 해결
 os.environ["TOKENIZERS_PARALLELISM"] = "false"

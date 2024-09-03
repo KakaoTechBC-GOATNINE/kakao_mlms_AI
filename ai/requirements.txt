@@ -43,3 +43,6 @@ tf-keras
 
 # elastic search
 elasticsearch
+
+# env
+python-dotenv

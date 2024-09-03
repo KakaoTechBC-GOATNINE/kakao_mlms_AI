@@ -12,7 +12,7 @@ monitoring.ui.container.elasticsearch.enabled: true
 # elasticsearch.username: elastic
 # elasticsearch.password: mlms123
 
-elasticsearch.serviceAccountToken: AAEAAWVsYXN0aWMva2liYW5hL2RlZmF1bHQ6T3NQOTF6REtUbTJrcUxQR3JMRDdYZw
+elasticsearch.serviceAccountToken: AAEAAWVsYXN0aWMva2liYW5hL2RlZmF1bHQ6T0ZtU2U2dWhROFMtUkl5Y2oxSXgzUQ
 
 # 암호화 키를 설정
 xpack.encryptedSavedObjects.encryptionKey: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
