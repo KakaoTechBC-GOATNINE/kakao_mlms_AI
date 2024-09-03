@@ -4,12 +4,17 @@ import hdbscan
 from collections import Counter
 import numpy as np
 from scipy.sparse import issparse
+import os
+
+# sentence bert 모델 실행
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_directory = os.path.join(current_dir, "paraphrase-multilingual-MiniLM-L12-v2")
+model = SentenceTransformer(model_directory)
 
 # 최신 BERT 기반 모델을 사용한 문장 임베딩
 def embed_reviews(reviews):
     if not reviews:  # 데이터가 없을 경우
         return np.array([])
-    model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
     embeddings = model.encode(reviews, show_progress_bar=False)
     return embeddings
 
@@ -90,4 +95,3 @@ def analyze_reviews_by_clustering(reviews, top_n):
     labels = cluster_reviews(embeddings)
     clusters_terms = extract_top_terms_from_largest_cluster(reviews, labels, top_n)
     return clusters_terms
-

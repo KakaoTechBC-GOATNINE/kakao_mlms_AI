@@ -40,3 +40,6 @@ sentence-transformers
 umap-learn
 hdbscan
 tf-keras
+
+# elastic search
+elasticsearch

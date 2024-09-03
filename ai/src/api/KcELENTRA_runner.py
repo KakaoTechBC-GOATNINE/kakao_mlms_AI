@@ -1,10 +1,12 @@
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
+import os
 
 # 모델 로드
-model_name = "ilmin/KcELECTRA_sentiment_model_v1.01"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=3)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_directory = os.path.join(current_dir, "..", "models", "KcELECTRA_sentiment_model_v1.01")
+tokenizer = AutoTokenizer.from_pretrained(model_directory)
+model = AutoModelForSequenceClassification.from_pretrained(model_directory, num_labels=3)
 model.eval()
 
 def KcELECTRA_predict_review_score(review_text: str) -> float:

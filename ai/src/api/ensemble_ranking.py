@@ -22,18 +22,21 @@ def rank_restaurants_keywords(reviews, keyword):
             total_score_electra = 0.0
             num_reviews = len(processed_reviews)
 
-            # KcELECTRA 모델을 사용하여 각 리뷰의 점수를 예측
-            for review_text in processed_reviews:
-                # print("-------------------------------")
-                # print(f"Processing review: {review_text}")
-                review_score = KcELECTRA_predict_review_score(review_text)
-                # print(f"score: {review_score}\n")
+            # KcELECTRA 모델을 사용하여 각 리뷰의 점수를 배치로 예측
+            batch_size = 10
+            for i in range(0, num_reviews, batch_size):
+                # 리뷰를 10개씩 묶어서 배치로 처리
+                batch_reviews = processed_reviews[i:i + batch_size]
+                batch_text = ' '.join(batch_reviews)
 
-                # 키워드 가중치 계산 (키워드가 포함된 리뷰의 비율)
-                if review_score >= 1 and re.search(keyword, review_text):
-                    review_score *= 1.5
+                batch_score = KcELECTRA_predict_review_score(batch_text)
 
-                total_score_electra += review_score
+                # 각 리뷰에 대한 점수를 나누어 키워드 가중치 계산
+                for j, review_text in enumerate(batch_reviews):
+                    review_score = batch_score / len(batch_reviews)  # 배치 결과를 각 리뷰에 분배
+                    if review_score >= 1 and re.search(keyword, review_text):
+                        review_score *= 1.5
+                    total_score_electra += review_score
 
             # KcELECTRA 평균 점수 계산
             avg_positive_score_electra = total_score_electra / num_reviews if num_reviews > 0 else 0
@@ -46,7 +49,7 @@ def rank_restaurants_keywords(reviews, keyword):
             weight = math.log(1 + num_reviews)  # log 스케일을 이용하여 가중치 계산
             
             # 최종 신뢰도 반영 점수 계산
-            weighted_score = (electra_weight * avg_positive_score_electra + bilstm_weight * avg_positive_score_bilstm) * weight
+            weighted_score = 3 * (electra_weight * avg_positive_score_electra + bilstm_weight * avg_positive_score_bilstm) * weight
 
             # print(f"Weighted Score for {store_name}: {weighted_score}")
             # print("\n")
@@ -72,3 +75,4 @@ def rank_restaurants_keywords(reviews, keyword):
     # print(f"\n\n{ranked_recommendations}\n\n")
 
     return ranked_recommendations
+
