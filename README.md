@@ -1,3 +1,11 @@
+<img width="973" alt="image" src="https://github.com/user-attachments/assets/6de5c504-7107-47ea-96f0-2966d341b3e5">
+
+<img width="1051" alt="image" src="https://github.com/user-attachments/assets/3d78c8aa-304c-4442-b4b5-7961ee0a0272">
+
+https://www.youtube.com/watch?v=zjOHfGqeT1Y
+
+------------
+
 사용자의 입력(음식 종류, 키워드)을 받아, 현재 위치 기반으로 추천 맛집 리스트(가게이름, 점수, 빈도수가 높은 단어)를 제공하는 API를 설계함
 추천된 맛집 리스트는 사용자 근방에서 접근 가능하도록 정렬되어 제공되며, 지도 상에 시각적으로 표시함
 
@@ -20,9 +28,3 @@
 <img width="1054" alt="image" src="https://github.com/user-attachments/assets/fcf22a25-6769-4b50-a052-c3cee874fb2b">
 
 <img width="1065" alt="image" src="https://github.com/user-attachments/assets/c4640af1-0dbe-43de-9778-78b4db822fa1">
-
-<img width="973" alt="image" src="https://github.com/user-attachments/assets/6de5c504-7107-47ea-96f0-2966d341b3e5">
-
-<img width="1051" alt="image" src="https://github.com/user-attachments/assets/3d78c8aa-304c-4442-b4b5-7961ee0a0272">
-
-https://www.youtube.com/watch?v=zjOHfGqeT1Y
